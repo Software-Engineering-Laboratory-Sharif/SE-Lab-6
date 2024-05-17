@@ -22,8 +22,8 @@ public class Shipment {
         this.state = state;
     }
 
-    public void getState(){
-        this.state.printStatus();
+    public String getState(){
+        return this.state.getStatus();
     }
 
 }

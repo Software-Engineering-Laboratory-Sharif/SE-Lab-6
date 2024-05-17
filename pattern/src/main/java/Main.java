@@ -32,8 +32,7 @@ public class Main {
                     System.out.println("Invalid state choice. Please try again.");
                     continue;
                 }
-                System.out.println("Current state: ");
-                shipment.getState();
+                System.out.println("Current state: " + shipment.getState());
             } else if (option == 2) {
                 System.out.print("Select the transition type: \n1. Standard\n2. Express\nEnter your choice: ");
                 int transitionOption = scanner.nextInt();

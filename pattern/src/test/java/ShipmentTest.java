@@ -5,30 +5,19 @@ import state.TransitState;
 import strategy.ExpressTransitionStrategy;
 import strategy.StandardTransitionStrategy;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ShipmentTest {
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
     @Test
     void testTransitState() {
-        System.setOut(new PrintStream(outContent));
         State state = new TransitState();
-        state.printStatus();
-        assertEquals("package is in transit state", outContent.toString());
-        System.setOut(originalOut);
+        assertEquals("in transit", state.getStatus());
     }
 
     @Test
     void testDeliveredState() {
-        System.setOut(new PrintStream(outContent));
         State state = new DeliveredState();
-        state.printStatus();
-        assertEquals("package is delivered", outContent.toString());
-        System.setOut(originalOut);
+        assertEquals("delivered", state.getStatus());
     }
 
     @Test
@@ -46,12 +35,9 @@ public class ShipmentTest {
 
     @Test
     void setState() {
-        System.setOut(new PrintStream(outContent));
         Shipment shipment = new Shipment(100);
         shipment.setState(new DeliveredState());
-        shipment.getState();
-        assertEquals("package is delivered", outContent.toString());
-        System.setOut(originalOut);
+        assertEquals("delivered", shipment.getState());
     }
 
     @Test

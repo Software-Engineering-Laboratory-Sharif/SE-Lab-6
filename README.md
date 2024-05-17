@@ -1,5 +1,64 @@
 # SE-Lab-6
 
+## پیاده سازی
+در این مسئله دو State و دو Transition داریم. برای State ها از الگوی State استفاده می‌کنیم و دو کلاس DeliveredState و TransitState تعریف می‌کنیم که هر یک وظیفه هندل کردن یک وضعیت از بسته را دارند. همچنین برای Transition از الگوی Stratehy استفاده می‌کنیم و دو استراتژی برای ارسال بسته در نظر داریم که هر یک در یکی از کلاس های StandardTransitionStrategy و یا ExpressTransitionStrategy هندل شده است. در کلاس Shipment کلیت ارسال یک بسته را پیاده سازی کرده‌ایم، ارسال یک بسته شامل یک استراتژی و یک استیت از بسته است. در ادامه کلاس Main و نحوه اجرای این برنامه را مشاهده می‌کنیم.
+```java
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Please enter the weight of the shipment: ");
+        float weight = scanner.nextFloat();
+        Shipment shipment = new Shipment(weight);
+
+        while (true) {
+            System.out.print(
+                    "\nChoose an option to modify: \n1. Change State\n2. Change Transition\nEnter your choice: ");
+            int option = scanner.nextInt();
+
+            if (option == 1) {
+                System.out.print("Select the new state: \n1. In-transit\n2. Delivered\nEnter your choice: ");
+                int stateOption = scanner.nextInt();
+                if (stateOption == 1) {
+                    shipment.setState(new TransitState());
+                    System.out.println("The shipment is now in-transit.");
+                } else if (stateOption == 2) {
+                    shipment.setState(new DeliveredState());
+                    System.out.println("The shipment has been delivered.");
+                    break;
+                } else {
+                    System.out.println("Invalid state choice. Please try again.");
+                    continue;
+                }
+                System.out.println("Current state: " + shipment.getState());
+            } else if (option == 2) {
+                System.out.print("Select the transition type: \n1. Standard\n2. Express\nEnter your choice: ");
+                int transitionOption = scanner.nextInt();
+                if (transitionOption == 1) {
+                    shipment.setTransitionStrategy(new StandardTransitionStrategy());
+                    System.out.println("The shipment is now using standard transition.");
+                } else if (transitionOption == 2) {
+                    shipment.setTransitionStrategy(new ExpressTransitionStrategy());
+                    System.out.println("The shipment is now using express transition.");
+                } else {
+                    System.out.println("Invalid transition choice. Please try again.");
+                    continue;
+                }
+                System.out.println("Transition type changed. The new cost is $" + shipment.executeTransition());
+            } else {
+                System.out.println("Invalid option. Please enter either 1 or 2.");
+            }
+        }
+    }
+}
+
+```   
+
+## اجرای برنامه
+‍‍‍![image](https://github.com/Software-Engineering-Laboratory-Sharif/SE-Lab-6/assets/79264950/f03314b5-acae-4372-a8cf-a955ecbad625)
+
+
+
 ## پرسش‌ها
 
 1. در کتاب GoF سه دسته الگوی طراحی معرفی شده است. آن‌ها را نام ببرید و در مورد هر دسته در حد دو خط توضیح دهید.
